@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tatame Control — Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== RESET & VARS ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-glow: rgba(37, 99, 235, 0.2);
+      --bg-dark: #0a0a0c;
+      --bg-card: #111116;
+      --bg-hover: rgba(255,255,255,0.04);
+      --text-main: #f2f2f5;
+      --text-muted: #8a8a9a;
+      --danger: #ef4444;
+      --warning: #f0b429;
+      --blue: #3b82f6;
+      --purple: #8b5cf6;
+      --border: rgba(255,255,255,0.08);
+      --radius: 12px;
+      --sidebar-w: 240px;
+    }
+    html, body { height: 100%; overflow: hidden; font-family: 'Inter', system-ui, sans-serif; font-size: 14px; background: var(--bg-dark); color: var(--text-main); }
+
+    /* ===== LAYOUT ===== */
+    .app { display: flex; height: 100%; overflow: hidden; }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--bg-card);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .sidebar-header {
+      padding: 1.25rem 1rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .sidebar-logo-wrap {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      border: 2px solid var(--primary);
+      background: white;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      padding: 3px;
+    }
+    .sidebar-logo-wrap span {
+      font-size: 1.8rem;
+    }
+    .role-badge {
+      background: rgba(16,185,129,0.12);
+      color: var(--primary);
+      border: 1px solid rgba(16,185,129,0.3);
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .sidebar-nav {
+      flex: 1;
+      padding: 0.75rem 0;
+      overflow-y: auto;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.65rem 1.25rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.18s;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border-right: 3px solid transparent;
+      user-select: none;
+    }
+    .nav-item:hover { background: rgba(255,255,255,0.04); color: var(--text-main); }
+    .nav-item.active { background: rgba(16,185,129,0.08); color: var(--primary); border-right-color: var(--primary); }
+    .nav-item svg { flex-shrink: 0; opacity: 0.8; }
+    .nav-item.active svg { opacity: 1; }
+    .sidebar-footer {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .user-info .user-name { font-size: 0.82rem; font-weight: 600; }
+    .user-info .user-belt { font-size: 0.72rem; color: var(--text-muted); }
+    .btn-logout {
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 8px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-logout:hover { background: rgba(239,68,68,0.1); color: var(--danger); }
+    .sidebar-credits {
+      padding: 0.6rem 1rem;
+      text-align: center;
+      font-size: 0.62rem;
+      color: #4b5563;
+      border-top: 1px solid rgba(255,255,255,0.02);
+      line-height: 1.5;
+    }
+    .sidebar-credits strong { color: var(--primary); }
+
+    /* ===== MAIN ===== */
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.75rem;
+      background: var(--bg-dark);
+    }
+    .page { display: none; animation: fadeIn 0.3s ease; }
+    .page.active { display: block; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+    /* ===== SHARED ===== */
+    .page-title { font-size: 1.35rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .page-subtitle { color: var(--text-muted); font-size: 0.83rem; margin-bottom: 1.5rem; }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+    }
+    .card-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 1rem; }
+    .pill-primary { background: var(--primary-glow); color: var(--primary); border:1px solid rgba(37, 99, 235, 0.3); }
+    .pill-green { background: rgba(16,185,129,0.12); color: #10b981; border:1px solid rgba(16,185,129,0.25); }
+    .pill-red   { background: rgba(239,68,68,0.12); color: #fca5a5; border:1px solid rgba(239,68,68,0.25); }
+    .pill-blue  { background: rgba(59,130,246,0.12); color: #93c5fd; border:1px solid rgba(59,130,246,0.25); }
+    .pill-yellow{ background: rgba(245,158,11,0.12); color: #fcd34d; border:1px solid rgba(245,158,11,0.25); }
+    .pill-gray  { background: rgba(255,255,255,0.07); color: var(--text-muted); border:1px solid var(--border); }
+
+    /* ===== DASHBOARD ===== */
+    .stat-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-bottom: 1.5rem; }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.25rem;
+      display: flex; align-items: center; gap: 1rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+    .stat-card.green { border-left: 4px solid var(--primary); }
+    .stat-card.blue  { border-left: 4px solid #3b82f6; }
+    .stat-card.orange{ border-left: 4px solid #f59e0b; }
+    .stat-card.purple{ border-left: 4px solid #8b5cf6; }
+    .stat-icon { font-size: 1.6rem; flex-shrink: 0; }
+    .stat-label { font-size: 0.73rem; color: var(--text-muted); font-weight: 500; }
+    .stat-value { font-size: 1.75rem; font-weight: 700; line-height: 1; }
+
+    .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .chart-bar-row { display:flex; align-items:center; gap:0.6rem; margin-bottom:0.55rem; }
+    .chart-day { width:2.6rem; text-align:right; font-size:0.72rem; color:var(--text-muted); text-transform:capitalize; flex-shrink:0; }
+    .chart-track { flex:1; background:rgba(255,255,255,0.06); border-radius:999px; height:10px; overflow:hidden; }
+    .chart-fill { height:100%; border-radius:999px; background:linear-gradient(90deg,var(--primary),#60a5fa); transition:width 0.5s ease; }
+    .chart-count { width:1.5rem; text-align:right; font-size:0.8rem; font-weight:600; flex-shrink:0; }
+
+    .class-row {
+      display:flex; justify-content:space-between; align-items:center;
+      background:rgba(255,255,255,0.03); border:1px solid var(--border);
+      border-radius:8px; padding:0.65rem 0.9rem; margin-bottom:0.6rem;
+    }
+    .class-row-title { font-weight:600; font-size:0.85rem; }
+    .class-row-time  { font-size:0.7rem; color:var(--text-muted); margin-top:1px; }
+
+    .progress-wrap { margin-bottom: 1.5rem; }
+    .progress-label { display:flex; justify-content:space-between; font-size:0.78rem; color:var(--text-muted); margin-bottom:0.35rem; }
+    .progress-track { background:rgba(255,255,255,0.08); border-radius:999px; height:8px; overflow:hidden; }
+    .progress-fill { height:100%; border-radius:999px; background:linear-gradient(90deg,var(--primary),#60a5fa); }
+
+    /* ===== ATLETAS ===== */
+    .search-bar {
+      display:flex; gap:0.75rem; margin-bottom:1.25rem; align-items:center;
+    }
+    .search-input {
+      flex:1; background:var(--bg-card); border:1px solid var(--border);
+      border-radius:8px; padding:0.55rem 0.9rem;
+      color:var(--text-main); font-size:0.85rem; outline:none;
+      transition:border-color 0.2s;
+    }
+    .search-input:focus { border-color:var(--primary); }
+    .athlete-table { width:100%; border-collapse:collapse; }
+    .athlete-table thead th {
+      text-align:left; font-size:0.72rem; font-weight:600;
+      color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em;
+      padding:0.5rem 0.75rem; border-bottom:1px solid var(--border);
+    }
+    .athlete-table tbody tr { border-bottom:1px solid rgba(255,255,255,0.04); transition:background 0.15s; }
+    .athlete-table tbody tr:hover { background:rgba(255,255,255,0.02); }
+    .athlete-table td { padding:0.7rem 0.75rem; font-size:0.83rem; }
+    .avatar {
+      width:30px; height:30px; border-radius:50%;
+      display:inline-flex; align-items:center; justify-content:center;
+      font-weight:700; font-size:0.75rem; flex-shrink:0;
+    }
+    .belt-dot {
+      width:10px; height:10px; border-radius:50%; display:inline-block;
+    }
+
+    /* ===== PAGAMENTOS ===== */
+    .payment-row {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:0.75rem 0; border-bottom:1px solid rgba(255,255,255,0.04);
+    }
+    .payment-row:last-child { border-bottom:none; }
+    .payment-name { font-weight:600; font-size:0.85rem; }
+    .payment-plan { font-size:0.72rem; color:var(--text-muted); margin-top:2px; }
+
+    /* ===== CHECK-IN ===== */
+    .checkin-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem; }
+    .checkin-class-select {
+      display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:1.25rem;
+    }
+    .checkin-class-card {
+      background:var(--bg-card); border:1px solid var(--border);
+      border-radius:10px; padding:0.9rem 1rem; cursor:pointer; transition:all 0.18s;
+    }
+    .checkin-class-card:hover, .checkin-class-card.selected {
+      border-color:var(--primary); background:var(--primary-glow);
+    }
+    .checkin-class-name { font-weight:700; font-size:0.88rem; margin-bottom:2px; }
+    .checkin-class-meta { font-size:0.72rem; color:var(--text-muted); }
+    .checkin-list { display:flex; flex-direction:column; gap:0.5rem; }
+    .checkin-athlete-row {
+      display:flex; justify-content:space-between; align-items:center;
+      background:rgba(255,255,255,0.03); border:1px solid var(--border);
+      border-radius:8px; padding:0.6rem 0.9rem;
+    }
+    .checkin-name { font-size:0.85rem; font-weight:600; }
+    .checkin-belt { font-size:0.7rem; color:var(--text-muted); margin-top:1px; }
+    .checkin-btn {
+      padding:0.3rem 0.8rem; border-radius:6px; font-size:0.75rem; font-weight:700;
+      cursor:pointer; transition:all 0.18s; border:none;
+    }
+    .checkin-btn.in { background:rgba(37,99,235,0.15); color:var(--primary); border:1px solid rgba(37,99,235,0.3); }
+    .checkin-btn.in:hover { background:var(--primary); color:white; }
+    .checkin-btn.done { background:rgba(37,99,235,0.08); color:#60a5fa; border:1px solid rgba(37,99,235,0.2); cursor:default; }
+
+    /* ===== AULAS ===== */
+    .classes-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; }
+    .class-card {
+      background:var(--bg-card); border:1px solid var(--border);
+      border-radius:var(--radius); padding:1.1rem;
+      transition:all 0.2s;
+    }
+    .class-card:hover { border-color:rgba(37,99,235,0.4); transform:translateY(-2px); }
+    .class-card-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.75rem; }
+    .class-card-title { font-weight:700; font-size:0.9rem; }
+    .class-card-date { font-size:0.72rem; color:var(--text-muted); margin-top:2px; }
+    .class-card-meta { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.9rem; }
+    .class-card-meta span { font-size:0.72rem; color:var(--text-muted); }
+    .class-capacity { margin-bottom:0.75rem; }
+    .capacity-bar-track { background:rgba(255,255,255,0.08); border-radius:999px; height:6px; margin-top:4px; overflow:hidden; }
+    .capacity-bar-fill { height:100%; border-radius:999px; background:var(--primary); }
+    .btn-book {
+      width:100%; padding:0.55rem; border-radius:8px;
+      font-size:0.82rem; font-weight:700; cursor:pointer; border:none;
+      transition:all 0.2s;
+    }
+    .btn-book.available { background:rgba(37,99,235,0.15); color:var(--primary); border:1px solid rgba(37,99,235,0.3); }
+    .btn-book.available:hover { background:var(--primary); color:white; }
+    .btn-book.booked { background:rgba(37,99,235,0.08); color:#60a5fa; border:1px solid rgba(37,99,235,0.2); cursor:default; }
+    .btn-book.full { background:rgba(239,68,68,0.08); color:#fca5a5; border:1px solid rgba(239,68,68,0.2); cursor:default; }
+
+    /* ===== DEMO BADGE (fora do demo) ===== */
+    .demo-mode-banner {
+      position:absolute; top:0; left:0; right:0;
+      background:linear-gradient(90deg,rgba(16,185,129,0.15),rgba(16,185,129,0.08));
+      border-bottom:1px solid rgba(16,185,129,0.25);
+      padding:6px 14px;
+      display:flex; align-items:center; justify-content:center; gap:8px;
+      font-size:0.72rem; color:var(--primary); font-weight:600;
+      letter-spacing:0.04em; text-transform:uppercase;
+      z-index:10;
+    }
+    .demo-dot { width:7px; height:7px; border-radius:50%; background:var(--primary); animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+    .app-wrapper { position:relative; height:100%; display:flex; flex-direction:column; }
+    .app-inner { flex:1; overflow:hidden; display:flex; flex-direction:column; }
+    .app-with-banner { padding-top:28px; }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width:4px; }
+    ::-webkit-scrollbar-track { background:transparent; }
+    ::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.12); border-radius:2px; }
+  </style>
+</head>
+<body>
+<div class="app-wrapper">
+  <div class="demo-mode-banner">
+    <div class="demo-dot"></div>
+    Modo Demo — Dados fictícios para demonstração
+    <div class="demo-dot"></div>
+  </div>
+
+  <div class="app-inner app-with-banner">
+    <div class="app">
+
+      <!-- SIDEBAR -->
+      <nav class="sidebar">
+        <div class="sidebar-header">
+          <div class="sidebar-logo-wrap" style="padding: 0; border: none; background: transparent;">
+            <img src="https://xohxgafjrafssdogkrpu.supabase.co/storage/v1/object/public/imagens/TatameControl_logo.png" alt="Logo" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary);" />
+          </div>
+          <span class="role-badge">Admin</span>
+        </div>
+        <div class="sidebar-nav">
+          <div class="nav-item active" onclick="showPage('dashboard',this)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            Dashboard
+          </div>
+          <div class="nav-item" onclick="showPage('aulas',this)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Gestão de Aulas
+          </div>
+          <div class="nav-item" onclick="showPage('atletas',this)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Atletas
+          </div>
+          <div class="nav-item" onclick="showPage('pagamentos',this)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            Pagamentos
+          </div>
+          <div class="nav-item" onclick="showPage('checkin',this)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+            Check-in
+          </div>
+        </div>
+        <div class="sidebar-footer">
+          <div class="user-info">
+            <div class="user-name">Carlos Ferreira</div>
+            <div class="user-belt">Faixa Preta</div>
+          </div>
+          <div class="btn-logout" title="Sair">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          </div>
+        </div>
+        <div class="sidebar-credits">
+          <p>© 2025 Todos os direitos reservados</p>
+          <p>Desenvolvido por <strong>Monteirismo</strong></p>
+        </div>
+      </nav>
+
+      <!-- MAIN -->
+      <main class="main-content">
+
+        <!-- ===== DASHBOARD ===== -->
+        <div class="page active" id="page-dashboard">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;">
+            <div>
+              <div class="page-title">Boa tarde, Admin Carlos! 👋</div>
+              <div class="page-subtitle">Aqui está o resumo de hoje no tatame.</div>
+            </div>
+            <span class="pill pill-green" style="font-size:0.78rem;padding:4px 12px;">Academia Cobra Kai</span>
+          </div>
+
+          <div class="stat-grid">
+            <div class="stat-card green">
+              <div class="stat-icon">🏅</div>
+              <div><div class="stat-label">Atletas</div><div class="stat-value">47</div></div>
+            </div>
+            <div class="stat-card blue">
+              <div class="stat-icon">📅</div>
+              <div><div class="stat-label">Aulas Hoje</div><div class="stat-value">3</div></div>
+            </div>
+            <div class="stat-card orange">
+              <div class="stat-icon">✅</div>
+              <div><div class="stat-label">Presenças Hoje</div><div class="stat-value">18</div></div>
+            </div>
+            <div class="stat-card purple">
+              <div class="stat-icon">📊</div>
+              <div><div class="stat-label">Presenças (7d)</div><div class="stat-value">94</div></div>
+            </div>
+          </div>
+
+          <div class="dash-grid">
+            <!-- Gráfico -->
+            <div class="card">
+              <div class="card-title">📈 Afluência — Últimos 7 dias</div>
+              <div id="chart"></div>
+            </div>
+
+            <!-- Aulas de Hoje -->
+            <div class="card">
+              <div class="card-title">🥋 Aulas de Hoje</div>
+              <div class="class-row">
+                <div><div class="class-row-title">BJJ Fundamentos</div><div class="class-row-time">⏱ 09:00 – 10:00</div></div>
+                <span class="pill pill-green">8 inscritos</span>
+              </div>
+              <div class="class-row">
+                <div><div class="class-row-title">Treino Geral</div><div class="class-row-time">⏱ 12:00 – 13:00</div></div>
+                <span class="pill pill-green">6 inscritos</span>
+              </div>
+              <div class="class-row">
+                <div><div class="class-row-title">Competição Avançado</div><div class="class-row-time">⏱ 19:00 – 20:30</div></div>
+                <span class="pill pill-green">4 inscritos</span>
+              </div>
+              <a href="#" style="display:block;margin-top:0.75rem;font-size:0.78rem;color:var(--primary);font-weight:600;" onclick="showPage('checkin',document.querySelector('.nav-item:nth-child(5)'));return false;">→ Ir para Check-in</a>
+            </div>
+
+            <!-- Retenção -->
+            <div class="card" style="grid-column:1/-1;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+                <div class="card-title" style="margin:0;">⚠️ Retenção — Inativos há mais de 30 dias</div>
+                <span class="pill pill-yellow">3 atletas</span>
+              </div>
+              <div class="class-row">
+                <div><div class="class-row-title">Pedro Alves</div><div class="class-row-time" style="display:flex;align-items:center;gap:5px;"><span class="belt-dot" style="background:#2563eb;"></span>Faixa Azul</div></div>
+                <span class="pill pill-red">38 dias</span>
+              </div>
+              <div class="class-row">
+                <div><div class="class-row-title">Marta Santos</div><div class="class-row-time" style="display:flex;align-items:center;gap:5px;"><span class="belt-dot" style="background:#fff;border:1px solid #555;"></span>Faixa Branca</div></div>
+                <span class="pill pill-red">45 dias</span>
+              </div>
+              <div class="class-row">
+                <div><div class="class-row-title">João Nunes</div><div class="class-row-time" style="display:flex;align-items:center;gap:5px;"><span class="belt-dot" style="background:#9333ea;"></span>Faixa Roxa</div></div>
+                <span class="pill pill-red">31 dias</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== AULAS ===== -->
+        <div class="page" id="page-aulas">
+          <div class="page-title">Gestão de Aulas</div>
+          <div class="page-subtitle">Cria e gere as aulas da tua academia.</div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;">
+            <div style="font-size:0.82rem;color:var(--text-muted);">Semana de 10 – 16 Mar 2025</div>
+            <button style="background:var(--primary);color:white;padding:0.5rem 1rem;border-radius:8px;font-size:0.8rem;font-weight:700;cursor:pointer;border:none;">+ Nova Aula</button>
+          </div>
+
+          <div class="classes-grid">
+            <div class="class-card">
+              <div class="class-card-header">
+                <div><div class="class-card-title">BJJ Fundamentos</div><div class="class-card-date">Segunda, 10 Mar</div></div>
+                <span class="pill pill-green">Aberta</span>
+              </div>
+              <div class="class-card-meta">
+                <span>⏱ 09:00 – 10:00</span>
+                <span>•</span>
+                <span>👤 Carlos Ferreira</span>
+                <span>•</span>
+                <span>🔄 Recorrente</span>
+              </div>
+              <div class="class-capacity">
+                <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--text-muted);margin-bottom:3px;"><span>Inscritos</span><span>8 / 15</span></div>
+                <div class="capacity-bar-track"><div class="capacity-bar-fill" style="width:53%;"></div></div>
+              </div>
+              <button class="btn-book booked" disabled>✓ Inscrito</button>
+            </div>
+            <div class="class-card">
+              <div class="class-card-header">
+                <div><div class="class-card-title">Treino Geral</div><div class="class-card-date">Segunda, 10 Mar</div></div>
+                <span class="pill pill-green">Aberta</span>
+              </div>
+              <div class="class-card-meta">
+                <span>⏱ 12:00 – 13:00</span>
+                <span>•</span>
+                <span>👤 Rui Monteiro</span>
+              </div>
+              <div class="class-capacity">
+                <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--text-muted);margin-bottom:3px;"><span>Inscritos</span><span>6 / 12</span></div>
+                <div class="capacity-bar-track"><div class="capacity-bar-fill" style="width:50%;"></div></div>
+              </div>
+              <button class="btn-book available" onclick="this.className='btn-book booked';this.disabled=true;this.textContent='✓ Inscrito';">Inscrever-me</button>
+            </div>
+            <div class="class-card">
+              <div class="class-card-header">
+                <div><div class="class-card-title">Competição Avançado</div><div class="class-card-date">Terça, 11 Mar</div></div>
+                <span class="pill pill-green">Aberta</span>
+              </div>
+              <div class="class-card-meta">
+                <span>⏱ 19:00 – 20:30</span>
+                <span>•</span>
+                <span>👤 Carlos Ferreira</span>
+                <span>•</span>
+                <span>🔄 Recorrente</span>
+              </div>
+              <div class="class-capacity">
+                <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--text-muted);margin-bottom:3px;"><span>Inscritos</span><span>4 / 8</span></div>
+                <div class="capacity-bar-track"><div class="capacity-bar-fill" style="width:50%;"></div></div>
+              </div>
+              <button class="btn-book available" onclick="this.className='btn-book booked';this.disabled=true;this.textContent='✓ Inscrito';">Inscrever-me</button>
+            </div>
+            <div class="class-card">
+              <div class="class-card-header">
+                <div><div class="class-card-title">Infanto-Juvenil</div><div class="class-card-date">Quarta, 12 Mar</div></div>
+                <span class="pill pill-red">Lotada</span>
+              </div>
+              <div class="class-card-meta">
+                <span>⏱ 17:00 – 18:00</span>
+                <span>•</span>
+                <span>👤 Ana Costa</span>
+              </div>
+              <div class="class-capacity">
+                <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--text-muted);margin-bottom:3px;"><span>Inscritos</span><span>10 / 10</span></div>
+                <div class="capacity-bar-track"><div class="capacity-bar-fill" style="width:100%;background:#ef4444;"></div></div>
+              </div>
+              <button class="btn-book full" disabled>Aula Lotada</button>
+            </div>
+            <div class="class-card">
+              <div class="class-card-header">
+                <div><div class="class-card-title">NoGi / Submission</div><div class="class-card-date">Quinta, 13 Mar</div></div>
+                <span class="pill pill-green">Aberta</span>
+              </div>
+              <div class="class-card-meta">
+                <span>⏱ 20:00 – 21:30</span>
+                <span>•</span>
+                <span>👤 Rui Monteiro</span>
+                <span>•</span>
+                <span>🔄 Recorrente</span>
+              </div>
+              <div class="class-capacity">
+                <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--text-muted);margin-bottom:3px;"><span>Inscritos</span><span>3 / 20</span></div>
+                <div class="capacity-bar-track"><div class="capacity-bar-fill" style="width:15%;"></div></div>
+              </div>
+              <button class="btn-book available" onclick="this.className='btn-book booked';this.disabled=true;this.textContent='✓ Inscrito';">Inscrever-me</button>
+            </div>
+            <div class="class-card">
+              <div class="class-card-header">
+                <div><div class="class-card-title">BJJ Open Mat</div><div class="class-card-date">Sábado, 15 Mar</div></div>
+                <span class="pill pill-green">Aberta</span>
+              </div>
+              <div class="class-card-meta">
+                <span>⏱ 10:00 – 12:00</span>
+                <span>•</span>
+                <span>👤 Carlos Ferreira</span>
+              </div>
+              <div class="class-capacity">
+                <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--text-muted);margin-bottom:3px;"><span>Inscritos</span><span>11 / 25</span></div>
+                <div class="capacity-bar-track"><div class="capacity-bar-fill" style="width:44%;"></div></div>
+              </div>
+              <button class="btn-book available" onclick="this.className='btn-book booked';this.disabled=true;this.textContent='✓ Inscrito';">Inscrever-me</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== ATLETAS ===== -->
+        <div class="page" id="page-atletas">
+          <div class="page-title">Atletas</div>
+          <div class="page-subtitle">Lista e gestão dos atletas da academia.</div>
+          <div class="search-bar">
+            <input class="search-input" type="text" placeholder="🔍  Pesquisar atleta..." oninput="filterAthletes(this.value)" />
+            <span class="pill pill-green" style="flex-shrink:0;">47 atletas</span>
+          </div>
+          <div class="card" style="padding:0;overflow:hidden;">
+            <table class="athlete-table" id="athlete-table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Faixa</th>
+                  <th>Presenças</th>
+                  <th>Estado</th>
+                  <th>Escola</th>
+                </tr>
+              </thead>
+              <tbody id="athlete-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ===== PAGAMENTOS ===== -->
+        <div class="page" id="page-pagamentos">
+          <div class="page-title">Pagamentos</div>
+          <div class="page-subtitle">Controlo de mensalidades e estado financeiro.</div>
+
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem;">
+            <div class="card" style="text-align:center;">
+              <div style="font-size:1.6rem;font-weight:700;color:var(--primary);">39</div>
+              <div style="font-size:0.72rem;color:var(--text-muted);margin-top:2px;">Pagamentos em Dia</div>
+            </div>
+            <div class="card" style="text-align:center;">
+              <div style="font-size:1.6rem;font-weight:700;color:var(--danger);">8</div>
+              <div style="font-size:0.72rem;color:var(--text-muted);margin-top:2px;">Em Atraso</div>
+            </div>
+            <div class="card" style="text-align:center;">
+              <div style="font-size:1.6rem;font-weight:700;color:var(--warning);">940 €</div>
+              <div style="font-size:0.72rem;color:var(--text-muted);margin-top:2px;">Receita do Mês</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Estado dos Pagamentos — Março 2025</div>
+            <div id="payment-list"></div>
+          </div>
+        </div>
+
+        <!-- ===== CHECK-IN ===== -->
+        <div class="page" id="page-checkin">
+          <div class="page-title">Check-in</div>
+          <div class="page-subtitle">Regista presenças nas aulas de hoje.</div>
+
+          <div style="margin-bottom:1rem;font-size:0.82rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Seleciona a aula</div>
+          <div class="checkin-class-select">
+            <div class="checkin-class-card selected" onclick="selectClass(this,'BJJ Fundamentos')">
+              <div class="checkin-class-name">BJJ Fundamentos</div>
+              <div class="checkin-class-meta">⏱ 09:00 – 10:00 &nbsp;•&nbsp; 8 inscritos</div>
+            </div>
+            <div class="checkin-class-card" onclick="selectClass(this,'Treino Geral')">
+              <div class="checkin-class-name">Treino Geral</div>
+              <div class="checkin-class-meta">⏱ 12:00 – 13:00 &nbsp;•&nbsp; 6 inscritos</div>
+            </div>
+            <div class="checkin-class-card" onclick="selectClass(this,'Competição Avançado')">
+              <div class="checkin-class-name">Competição Avançado</div>
+              <div class="checkin-class-meta">⏱ 19:00 – 20:30 &nbsp;•&nbsp; 4 inscritos</div>
+            </div>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.9rem;">
+            <div style="font-weight:700;font-size:0.88rem;">Lista de Inscritos</div>
+            <span class="pill pill-green" id="checkin-counter">0 / 8 presentes</span>
+          </div>
+          <div class="checkin-list" id="checkin-list"></div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== DATA =====
+const athletes = [
+  { name:'Ana Costa',       belt:'Azul',   color:'#2563eb', attended:142, active:true,  school:'Cobra Kai' },
+  { name:'Bruno Silva',     belt:'Branca',  color:'#fff',    attended:28,  active:true,  school:'Cobra Kai', white:true },
+  { name:'Carlos Tavares',  belt:'Roxa',   color:'#9333ea', attended:287, active:true,  school:'Cobra Kai' },
+  { name:'Diana Fonseca',   belt:'Azul',   color:'#2563eb', attended:165, active:true,  school:'Cobra Kai' },
+  { name:'Eduardo Lopes',   belt:'Marrom', color:'#92400e', attended:398, active:true,  school:'Cobra Kai' },
+  { name:'Filipa Neves',    belt:'Branca',  color:'#fff',    attended:12,  active:false, school:'Cobra Kai', white:true },
+  { name:'Gonçalo Reis',    belt:'Azul',   color:'#2563eb', attended:201, active:true,  school:'Cobra Kai' },
+  { name:'Helena Sousa',    belt:'Roxa',   color:'#9333ea', attended:310, active:true,  school:'Cobra Kai' },
+  { name:'Ivo Marques',     belt:'Branca',  color:'#fff',    attended:55,  active:true,  school:'Cobra Kai', white:true },
+  { name:'Joana Carvalho',  belt:'Azul',   color:'#2563eb', attended:132, active:true,  school:'Cobra Kai' },
+  { name:'Kevin Santos',    belt:'Branca',  color:'#fff',    attended:8,   active:true,  school:'Cobra Kai', white:true },
+  { name:'Laura Ferreira',  belt:'Azul',   color:'#2563eb', attended:177, active:false, school:'Cobra Kai' },
+  { name:'Manuel Rodrigues',belt:'Marrom', color:'#92400e', attended:421, active:true,  school:'Cobra Kai' },
+  { name:'Nuno Almeida',    belt:'Azul',   color:'#2563eb', attended:143, active:true,  school:'Cobra Kai' },
+  { name:'Olga Pereira',    belt:'Branca',  color:'#fff',    attended:34,  active:true,  school:'Cobra Kai', white:true },
+  { name:'Pedro Alves',     belt:'Azul',   color:'#2563eb', attended:89,  active:false, school:'Cobra Kai' },
+  { name:'Rita Gomes',      belt:'Roxa',   color:'#9333ea', attended:265, active:true,  school:'Cobra Kai' },
+  { name:'Sérgio Costa',    belt:'Branca',  color:'#fff',    attended:19,  active:true,  school:'Cobra Kai', white:true },
+  { name:'Tânia Baptista',  belt:'Azul',   color:'#2563eb', attended:198, active:true,  school:'Cobra Kai' },
+  { name:'Ulisses Maia',    belt:'Branca',  color:'#fff',    attended:7,   active:true,  school:'Cobra Kai', white:true },
+];
+
+const payments = [
+  { name:'Ana Costa',        plan:'Standard',  paid:true  },
+  { name:'Bruno Silva',      plan:'Starter',   paid:true  },
+  { name:'Carlos Tavares',   plan:'Plus',      paid:true  },
+  { name:'Diana Fonseca',    plan:'Standard',  paid:false },
+  { name:'Eduardo Lopes',    plan:'Pro',       paid:true  },
+  { name:'Filipa Neves',     plan:'Starter',   paid:false },
+  { name:'Gonçalo Reis',     plan:'Standard',  paid:true  },
+  { name:'Helena Sousa',     plan:'Plus',      paid:true  },
+  { name:'Ivo Marques',      plan:'Starter',   paid:false },
+  { name:'Joana Carvalho',   plan:'Standard',  paid:true  },
+  { name:'Kevin Santos',     plan:'Starter',   paid:true  },
+  { name:'Laura Ferreira',   plan:'Standard',  paid:false },
+  { name:'Manuel Rodrigues', plan:'Pro',       paid:true  },
+  { name:'Nuno Almeida',     plan:'Standard',  paid:true  },
+  { name:'Olga Pereira',     plan:'Starter',   paid:true  },
+  { name:'Pedro Alves',      plan:'Starter',   paid:false },
+  { name:'Rita Gomes',       plan:'Plus',      paid:true  },
+  { name:'Sérgio Costa',     plan:'Starter',   paid:false },
+  { name:'Tânia Baptista',   plan:'Standard',  paid:true  },
+  { name:'Ulisses Maia',     plan:'Starter',   paid:false },
+];
+
+const checkinAthletes = {
+  'BJJ Fundamentos':    ['Ana Costa','Bruno Silva','Carlos Tavares','Diana Fonseca','Eduardo Lopes','Gonçalo Reis','Helena Sousa','Ivo Marques'],
+  'Treino Geral':       ['Joana Carvalho','Kevin Santos','Manuel Rodrigues','Nuno Almeida','Olga Pereira','Tânia Baptista'],
+  'Competição Avançado':['Carlos Tavares','Eduardo Lopes','Manuel Rodrigues','Rita Gomes'],
+};
+
+const beltColors = { 'Azul':'#2563eb','Roxa':'#9333ea','Marrom':'#92400e','Branca':'#fff' };
+const athleteBelts = {};
+athletes.forEach(a => athleteBelts[a.name] = a.belt);
+
+// ===== NAV =====
+function showPage(id, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (el) el.classList.add('active');
+}
+
+// ===== CHART =====
+const chartData = [
+  {day:'seg', count:14}, {day:'ter', count:9}, {day:'qua', count:18},
+  {day:'qui', count:11}, {day:'sex', count:16}, {day:'sáb', count:22}, {day:'dom', count:4}
+];
+const maxC = Math.max(...chartData.map(d=>d.count));
+const chartEl = document.getElementById('chart');
+chartData.forEach(d => {
+  const pct = Math.max(4, Math.round((d.count/maxC)*100));
+  const highlighted = d.count === maxC;
+  chartEl.innerHTML += `
+    <div class="chart-bar-row">
+      <span class="chart-day">${d.day}</span>
+      <div class="chart-track"><div class="chart-fill" style="width:${pct}%;${highlighted?'':'background:rgba(16,185,129,0.5);'}"></div></div>
+      <span class="chart-count" style="color:${d.count===0?'var(--text-muted)':'white'}">${d.count}</span>
+    </div>`;
+});
+
+// ===== ATHLETES TABLE =====
+function initAthletes(filter='') {
+  const tbody = document.getElementById('athlete-tbody');
+  const avatarColors = ['#10b981','#3b82f6','#8b5cf6','#f59e0b','#ef4444','#06b6d4'];
+  tbody.innerHTML = athletes
+    .filter(a => !filter || a.name.toLowerCase().includes(filter.toLowerCase()))
+    .map((a,i) => {
+      const initials = a.name.split(' ').map(n=>n[0]).join('').substring(0,2);
+      const col = avatarColors[i % avatarColors.length];
+      const beltColor = a.white ? '#ddd' : beltColors[a.belt]||'#9ca3af';
+      const borderStyle = a.white ? 'border:1px solid #555;' : '';
+      return `<tr>
+        <td style="display:flex;align-items:center;gap:8px;">
+          <div class="avatar" style="background:${col}22;color:${col};">${initials}</div>
+          <span>${a.name}</span>
+        </td>
+        <td><span style="display:flex;align-items:center;gap:5px;">
+          <span class="belt-dot" style="background:${beltColor};${borderStyle}"></span>
+          ${a.belt}
+        </span></td>
+        <td>${a.attended}</td>
+        <td><span class="pill ${a.active?'pill-green':'pill-red'}">${a.active?'Ativo':'Inativo'}</span></td>
+        <td style="color:var(--text-muted);font-size:0.78rem;">${a.school}</td>
+      </tr>`;
+    }).join('');
+}
+initAthletes();
+function filterAthletes(v) { initAthletes(v); }
+
+// ===== PAYMENTS =====
+const payList = document.getElementById('payment-list');
+payments.forEach(p => {
+  payList.innerHTML += `
+    <div class="payment-row">
+      <div>
+        <div class="payment-name">${p.name}</div>
+        <div class="payment-plan">Plano ${p.plan} &nbsp;•&nbsp; Março 2025</div>
+      </div>
+      <span class="pill ${p.paid?'pill-green':'pill-red'}">${p.paid?'✓ Pago':'Pendente'}</span>
+    </div>`;
+});
+
+// ===== CHECK-IN =====
+let checkinState = {};
+let currentClass = 'BJJ Fundamentos';
+
+function selectClass(el, cls) {
+  document.querySelectorAll('.checkin-class-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  currentClass = cls;
+  renderCheckin();
+}
+
+function renderCheckin() {
+  const list = document.getElementById('checkin-list');
+  const athletes = checkinAthletes[currentClass];
+  const done = (checkinState[currentClass]||[]);
+  list.innerHTML = athletes.map(name => {
+    const belt = athleteBelts[name] || 'Branca';
+    const beltColor = belt === 'Branca' ? '#ddd' : beltColors[belt]||'#9ca3af';
+    const borderStyle = belt === 'Branca' ? 'border:1px solid #555;' : '';
+    const isDone = done.includes(name);
+    return `<div class="checkin-athlete-row">
+      <div>
+        <div class="checkin-name">${name}</div>
+        <div class="checkin-belt" style="display:flex;align-items:center;gap:5px;">
+          <span class="belt-dot" style="background:${beltColor};${borderStyle}width:8px;height:8px;"></span>
+          Faixa ${belt}
+        </div>
+      </div>
+      <button class="checkin-btn ${isDone?'done':'in'}" ${isDone?'disabled':''} onclick="doCheckin('${name}')">${isDone?'✓ Presente':'Check-in'}</button>
+    </div>`;
+  }).join('');
+  updateCounter();
+}
+
+function doCheckin(name) {
+  if (!checkinState[currentClass]) checkinState[currentClass] = [];
+  if (!checkinState[currentClass].includes(name)) checkinState[currentClass].push(name);
+  renderCheckin();
+}
+
+function updateCounter() {
+  const total = checkinAthletes[currentClass].length;
+  const done = (checkinState[currentClass]||[]).length;
+  document.getElementById('checkin-counter').textContent = `${done} / ${total} presentes`;
+}
+
+renderCheckin();
+
+// ===== LISTEN FOR EXTERNAL TAB NAVIGATION =====
+window.addEventListener('message', (event) => {
+  if (event.data && event.data.action === 'navigate') {
+    const page = event.data.page;
+    const navMap = {
+      'dashboard': 0,
+      'aulas': 1,
+      'atletas': 2,
+      'pagamentos': 3,
+      'checkin': 4
+    };
+    const idx = navMap[page];
+    if (idx !== undefined) {
+      const navItems = document.querySelectorAll('.nav-item');
+      if (navItems[idx]) {
+        showPage(page, navItems[idx]);
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>

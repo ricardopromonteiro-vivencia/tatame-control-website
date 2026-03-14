@@ -15,13 +15,14 @@
   <nav class="navbar" id="navbar">
     <div class="nav-container">
       <a href="#home" class="nav-logo">
-        <span class="logo-icon">⬡</span>
+        <img src="https://xohxgafjrafssdogkrpu.supabase.co/storage/v1/object/public/imagens/TatameControl_logo.png" alt="Tatame Control Logo" style="height: 48px; border-radius: 50%;" />
         <span class="logo-text">TATAME <span class="logo-accent">CONTROL</span></span>
       </a>
       <ul class="nav-links">
         <li><a href="#features">Funcionalidades</a></li>
-        <li><a href="#screenshots">Screenshots</a></li>
+        <li><a href="#demo">Demo</a></li>
         <li><a href="#pricing">Preços</a></li>
+        <li><a href="#faq">FAQ</a></li>
         <li><a href="#contact" class="nav-cta">Começar Agora</a></li>
       </ul>
       <button class="nav-toggle" id="navToggle" aria-label="Menu">
@@ -53,7 +54,7 @@
       </p>
       <div class="hero-actions reveal">
         <a href="#pricing" class="btn btn-primary">Ver Planos</a>
-        <a href="#features" class="btn btn-outline">Saber Mais</a>
+        <a href="#demo" class="btn btn-outline">Experimentar Demo</a>
       </div>
       <div class="hero-stats reveal">
         <div class="stat">
@@ -176,87 +177,43 @@
     </div>
   </section>
 
-  <!-- ========== SCREENSHOTS ========== -->
-  <section class="screenshots" id="screenshots">
-    <div class="screenshots-bg-glow"></div>
+  <!-- ========== DEMO INTERATIVA ========== -->
+  <section class="demo-section" id="demo">
+    <div class="demo-bg-glow"></div>
     <div class="container">
       <div class="section-header reveal">
-        <span class="section-tag">Interface</span>
-        <h2 class="section-title">Vê o <span class="accent">Tatame Control</span> em ação</h2>
-        <p class="section-desc">Uma interface limpa, intuitiva e otimizada para o dia a dia de qualquer academia.</p>
+        <span class="section-tag">Demo Interativa</span>
+        <h2 class="section-title">Experimenta o <span class="accent">Tatame Control</span> agora</h2>
+        <p class="section-desc">Navega pela app em modo demo — dados fictícios, interface real. Sem registo, sem instalação.</p>
       </div>
 
-      <div class="screenshots-showcase reveal">
-        <div class="screenshot-main">
-          <div class="screen-frame">
-            <div class="screen-bar">
-              <div class="screen-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <div class="screen-url">tatame-control.app</div>
-            </div>
-            <div class="screen-placeholder main">
-              <div class="placeholder-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48" height="48">
-                  <rect x="2" y="3" width="20" height="14" rx="2"/>
-                  <line x1="8" y1="21" x2="16" y2="21"/>
-                  <line x1="12" y1="17" x2="12" y2="21"/>
-                </svg>
-              </div>
-              <p class="placeholder-text">Dashboard Principal</p>
-              <span class="placeholder-sub">Screenshot em breve</span>
-            </div>
-          </div>
-        </div>
-        <div class="screenshots-side">
-          <div class="screen-frame small reveal" data-delay="100">
-            <div class="screen-bar">
-              <div class="screen-dots"><span></span><span></span><span></span></div>
-            </div>
-            <div class="screen-placeholder">
-              <div class="placeholder-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="32" height="32">
-                  <rect x="3" y="4" width="18" height="18" rx="2"/>
-                  <line x1="3" y1="10" x2="21" y2="10"/>
-                  <line x1="8" y1="2" x2="8" y2="6"/>
-                  <line x1="16" y1="2" x2="16" y2="6"/>
-                </svg>
-              </div>
-              <p class="placeholder-text">Calendário de Aulas</p>
-            </div>
-          </div>
-          <div class="screen-frame small reveal" data-delay="200">
-            <div class="screen-bar">
-              <div class="screen-dots"><span></span><span></span><span></span></div>
-            </div>
-            <div class="screen-placeholder">
-              <div class="placeholder-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="32" height="32">
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                  <circle cx="9" cy="7" r="4"/>
-                </svg>
-              </div>
-              <p class="placeholder-text">Gestão de Alunos</p>
-            </div>
-          </div>
-          <div class="screen-frame small reveal" data-delay="300">
-            <div class="screen-bar">
-              <div class="screen-dots"><span></span><span></span><span></span></div>
-            </div>
-            <div class="screen-placeholder">
-              <div class="placeholder-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="32" height="32">
-                  <rect x="2" y="5" width="20" height="14" rx="2"/>
-                  <line x1="2" y1="10" x2="22" y2="10"/>
-                </svg>
-              </div>
-              <p class="placeholder-text">Pagamentos</p>
-            </div>
-          </div>
-        </div>
+      <div class="demo-tabs reveal">
+        <button class="demo-tab active" data-page="dashboard" onclick="switchDemoTab(this,'dashboard')">📊 Dashboard</button>
+        <button class="demo-tab" data-page="aulas" onclick="switchDemoTab(this,'aulas')">📅 Aulas</button>
+        <button class="demo-tab" data-page="atletas" onclick="switchDemoTab(this,'atletas')">👥 Atletas</button>
+        <button class="demo-tab" data-page="pagamentos" onclick="switchDemoTab(this,'pagamentos')">💳 Pagamentos</button>
+        <button class="demo-tab" data-page="checkin" onclick="switchDemoTab(this,'checkin')">✅ Check-in</button>
       </div>
 
-      <p class="screenshots-note reveal">📸 Screenshots reais da aplicação em breve</p>
+      <div class="demo-frame-wrap reveal">
+        <div class="demo-browser-bar">
+          <div class="screen-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="screen-url">tatame-control.app/demo</div>
+          <span class="demo-live-badge"><span class="demo-live-dot"></span>Demo Ativa</span>
+        </div>
+        <iframe
+          id="demoFrame"
+          src="demo.html"
+          class="demo-iframe"
+          title="Tatame Control App — Demo"
+          scrolling="no"
+          frameborder="0"
+        ></iframe>
+      </div>
+
+      <p class="demo-note reveal">🔒 Modo demonstração — todos os dados são fictícios e não são guardados.</p>
     </div>
   </section>
 
@@ -409,6 +366,118 @@
     </div>
   </section>
 
+  <!-- ========== FAQ ========== -->
+  <section class="faq" id="faq">
+    <div class="faq-bg-glow"></div>
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">FAQ</span>
+        <h2 class="section-title">Perguntas <span class="accent">Frequentes</span></h2>
+        <p class="section-desc">Tudo o que precisas de saber antes de começar a gerir a tua academia com o Tatame Control.</p>
+      </div>
+
+      <div class="faq-list">
+
+        <div class="faq-item reveal" data-delay="0">
+          <button class="faq-question" aria-expanded="false">
+            <span>O que está incluído na mensalidade?</span>
+            <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Todos os planos mensais incluem manutenção técnica da plataforma, suporte por email e todas as atualizações de software. Não existem custos ocultos — pagas apenas a mensalidade do teu plano.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal" data-delay="60">
+          <button class="faq-question" aria-expanded="false">
+            <span>Posso mudar de plano a qualquer momento?</span>
+            <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Sim. Podes fazer upgrade ou downgrade do teu plano mensal sempre que precisares, sem penalizações. A alteração tem efeito a partir do mês seguinte.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal" data-delay="120">
+          <button class="faq-question" aria-expanded="false">
+            <span>O check-in NFC funciona em todos os dispositivos?</span>
+            <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              O check-in via NFC é compatível com a maioria dos smartphones Android com NFC ativado. Em dispositivos sem NFC, está disponível a opção de check-in manual, igualmente rápida e segura.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal" data-delay="180">
+          <button class="faq-question" aria-expanded="false">
+            <span>Os dados da minha academia são seguros?</span>
+            <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Sim. Todos os dados são armazenados numa base de dados segura com autenticação robusta. A plataforma é alojada em infraestrutura cloud com backups regulares e conformidade com o RGPD.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal" data-delay="240">
+          <button class="faq-question" aria-expanded="false">
+            <span>O que é a "App Personalizada"?</span>
+            <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              A opção App Personalizada (200€ one-time) inclui a personalização da identidade visual da tua academia: logotipo, nome da app, cores e branding exclusivos. A tua academia tem uma aplicação com a sua própria identidade.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal" data-delay="300">
+          <button class="faq-question" aria-expanded="false">
+            <span>Preciso de instalar alguma aplicação?</span>
+            <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Não. O Tatame Control é 100% web-based. Funciona diretamente no browser, sem necessidade de instalar nada. Acessível em qualquer dispositivo — computador, tablet ou telemóvel.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal" data-delay="360">
+          <button class="faq-question" aria-expanded="false">
+            <span>Como é feita a gestão de pagamentos dos alunos?</span>
+            <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              O módulo de pagamentos permite registar e acompanhar as mensalidades de cada aluno. Recebes alertas de pagamentos em atraso e tens acesso a um dashboard financeiro com o resumo do estado de cada atleta.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal" data-delay="420">
+          <button class="faq-question" aria-expanded="false">
+            <span>E se tiver dúvidas ou precisar de ajuda?</span>
+            <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              O suporte está incluído em todos os planos. Podes contactar-nos por email em <a href="mailto:info@tatamecontrol.pt" style="color:var(--red)">info@tatamecontrol.pt</a> e respondemos o mais brevemente possível.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ========== CTA / CONTACT ========== -->
   <section class="cta-section" id="contact">
     <div class="cta-glow"></div>
@@ -428,7 +497,7 @@
       <div class="footer-inner">
         <div class="footer-brand">
           <a href="#home" class="nav-logo footer-logo">
-            <span class="logo-icon">⬡</span>
+            <img src="https://xohxgafjrafssdogkrpu.supabase.co/storage/v1/object/public/imagens/TatameControl_logo.png" alt="Tatame Control Logo" style="height: 48px; border-radius: 50%;" />
             <span class="logo-text">TATAME <span class="logo-accent">CONTROL</span></span>
           </a>
           <p class="footer-tagline">A plataforma de gestão para academias de Jiu-Jitsu.</p>
@@ -437,8 +506,9 @@
           <h5>Plataforma</h5>
           <ul>
             <li><a href="#features">Funcionalidades</a></li>
-            <li><a href="#screenshots">Screenshots</a></li>
+            <li><a href="#demo">Demo</a></li>
             <li><a href="#pricing">Preços</a></li>
+            <li><a href="#faq">FAQ</a></li>
           </ul>
         </div>
         <div class="footer-links">

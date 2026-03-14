@@ -116,3 +116,32 @@ document.querySelectorAll('.feature-card').forEach(card => {
     card.style.setProperty('--mouse-y', `${y}%`);
   });
 });
+
+// ---- FAQ Accordion ----
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+
+    // Fecha todos
+    document.querySelectorAll('.faq-item.open').forEach(openItem => {
+      openItem.classList.remove('open');
+      openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+    });
+
+    // Abre o clicado (se estava fechado)
+    if (!isOpen) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
+// ---- Demo Iframe Tab Navigation ----
+function switchDemoTab(tabEl, page) {
+  document.querySelectorAll('.demo-tab').forEach(t => t.classList.remove('active'));
+  tabEl.classList.add('active');
+  const iframe = document.getElementById('demoFrame');
+  if (iframe && iframe.contentWindow) {
+    iframe.contentWindow.postMessage({ action: 'navigate', page: page }, '*');
+  }
+}
