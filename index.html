@@ -42,7 +42,7 @@
     <div class="hero-content">
       <div class="hero-badge reveal">
         <span class="badge-dot"></span>
-        Plataforma de Gestão para Academias de BJJ
+        Plataforma de Gestão para Academias de Jiu-Jitsu
       </div>
       <h1 class="hero-title reveal">
         TATAME<br />
@@ -63,8 +63,25 @@
         </div>
         <div class="stat-divider"></div>
         <div class="stat">
-          <span class="stat-number" data-target="300">0</span>
-          <span class="stat-label">Alunos suportados</span>
+          <div class="stat-devices">
+            <!-- Smartphone -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+              <line x1="12" y1="18" x2="12.01" y2="18"></line>
+            </svg>
+            <!-- Tablet -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <!-- Monitor -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </div>
+          <span class="stat-label">Todos os dispositivos suportados</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat">
@@ -145,9 +162,9 @@
             </div>
           </div>
           <h3 class="feature-title">Check-in de Professores</h3>
-          <p class="feature-desc">Sistema de check-in rápido e seguro para professores validarem a sua presença nas aulas. Suporte a NFC e check-in manual.</p>
+          <p class="feature-desc">Sistema de check-in rápido e seguro para professores validarem a sua presença nas aulas.</p>
           <ul class="feature-list">
-            <li>Check-in via NFC ou manual</li>
+            <li>Check-in simples</li>
             <li>Registo de presenças automático</li>
             <li>Histórico de assiduidade completo</li>
           </ul>
@@ -226,143 +243,104 @@
         <p class="section-desc">Preços sem IVA. Começa com um custo inicial único e mantém a tua academia a funcionar com a mensalidade adaptada ao teu volume de alunos.</p>
       </div>
 
-      <!-- Setup Plans -->
-      <div class="pricing-setup reveal">
-        <h3 class="pricing-group-title">Custo Inicial <span class="badge-new">One-Time</span></h3>
-        <div class="setup-grid">
-          <div class="setup-card">
-            <div class="setup-header">
-              <h4 class="setup-name">App Simples</h4>
-              <div class="setup-price">
-                <span class="price-value">100</span>
-                <span class="price-currency">€</span>
-              </div>
+      <div class="pricing-comparison reveal">
+        <!-- Plano Simples -->
+        <div class="pricing-col">
+          <div class="p-col-header">
+            <h3 class="p-col-name">Plano Standrd</h3>
+            <div class="p-col-price">100<span>€</span></div>
+            <p class="section-desc" style="margin-top:10px; font-size: 0.85rem;">Custo inicial único</p>
+          </div>
+          
+          <div class="p-col-features">
+            <div class="p-feature">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--red)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Abertura de conta com base de dados "1 escola" na lista
             </div>
-            <div class="setup-perks">
-              <div class="perk">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#e63946" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                Abertura de conta com base de dados
+            <div class="p-feature">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--red)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              3 meses de mensalidades incluída
+            </div>
+            <div class="p-feature">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--red)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Acesso imediato à plataforma
+            </div>
+          </div>
+
+          <div class="monthly-tiers-wrap">
+            <h4 class="monthly-tiers-title">Mensalidades</h4>
+            <div class="monthly-tiers">
+              <div class="tier-item">
+                <span class="tier-label">Até <strong>35</strong> alunos</span>
+                <div class="tier-price">20<span>€/mês</span></div>
+                <a href="pedido.html?plano=simples-35" class="btn btn-outline btn-sm" style="padding: 6px 16px; font-size: 0.75rem;">Aderir</a>
               </div>
-              <div class="perk">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#e63946" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                3 meses com manutenção incluída
+              <div class="tier-item">
+                <span class="tier-label">Até <strong>50</strong> alunos</span>
+                <div class="tier-price">25<span>€/mês</span></div>
+                <a href="pedido.html?plano=simples-50" class="btn btn-outline btn-sm" style="padding: 6px 16px; font-size: 0.75rem;">Aderir</a>
               </div>
-              <div class="perk">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#e63946" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                Acesso imediato à plataforma
+              <div class="tier-item">
+                <span class="tier-label">Até <strong>70</strong> alunos</span>
+                <div class="tier-price">30<span>€/mês</span></div>
+                <a href="pedido.html?plano=simples-70" class="btn btn-outline btn-sm" style="padding: 6px 16px; font-size: 0.75rem;">Aderir</a>
               </div>
             </div>
           </div>
-          <div class="setup-card featured">
-            <div class="featured-badge">Recomendado</div>
-            <div class="setup-header">
-              <h4 class="setup-name">App Personalizada</h4>
-              <div class="setup-price">
-                <span class="price-value">200</span>
-                <span class="price-currency">€</span>
-              </div>
+        </div>
+
+        <div class="pricing-col-divider"></div>
+
+        <!-- Plano Plus -->
+        <div class="pricing-col featured">
+          <div class="featured-badge" style="top: 20px; right: 20px;">Recomendado</div>
+          <div class="p-col-header">
+            <h3 class="p-col-name">Plano Plus</h3>
+            <div class="p-col-price">200<span>€</span></div>
+            <p class="section-desc" style="margin-top:10px; font-size: 0.85rem;">Custo inicial único</p>
+          </div>
+
+          <div class="p-col-features">
+            <div class="p-feature">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--gold)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Várias escolas e alunos ilimitados na base de dados
             </div>
-            <div class="setup-perks">
-              <div class="perk">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#f0b429" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                Abertura de conta com base de dados
+            <div class="p-feature">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--gold)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Aparência, logotipo e nome da app personalizados
+            </div>
+            <div class="p-feature">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--gold)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Identidade visual total da tua academia
+            </div>
+          </div>
+
+          <div class="monthly-tiers-wrap">
+            <h4 class="monthly-tiers-title">Mensalidades</h4>
+            <div class="monthly-tiers">
+              <div class="tier-item">
+                <span class="tier-label">Até <strong>100</strong> alunos</span>
+                <div class="tier-price">55<span>€/mês</span></div>
+                <a href="pedido.html?plano=plus-100" class="btn btn-primary btn-sm" style="padding: 6px 16px; font-size: 0.75rem;">Aderir</a>
               </div>
-              <div class="perk">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#f0b429" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                Aparência, logotipo e nome da app personalizados
+              <div class="tier-item">
+                <span class="tier-label">Até <strong>150</strong> alunos</span>
+                <div class="tier-price">70<span>€/mês</span></div>
+                <a href="pedido.html?plano=plus-150" class="btn btn-primary btn-sm" style="padding: 6px 16px; font-size: 0.75rem;">Aderir</a>
               </div>
-              <div class="perk">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#f0b429" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                3 meses com manutenção incluída
+              <div class="tier-item">
+                <span class="tier-label">Até <strong>200</strong> alunos</span>
+                <div class="tier-price">80<span>€/mês</span></div>
+                <a href="pedido.html?plano=plus-200" class="btn btn-primary btn-sm" style="padding: 6px 16px; font-size: 0.75rem;">Aderir</a>
               </div>
-              <div class="perk">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#f0b429" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                Identidade visual da tua academia
+              <div class="tier-plus-note">
+                +10€ por cada 100 alunos adicionais
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- Monthly Plans -->
-      <div class="pricing-monthly reveal">
-        <h3 class="pricing-group-title">Mensalidade <span class="badge-monthly">Manutenção & Suporte Incluídos</span></h3>
-        <div class="monthly-grid">
-
-          <div class="monthly-card reveal" data-delay="0">
-            <div class="monthly-tier">Starter</div>
-            <div class="monthly-limit">até <strong>35</strong> alunos</div>
-            <div class="monthly-price">
-              <span class="m-price-value">20</span>
-              <span class="m-price-unit">€/mês</span>
-            </div>
-            <a href="#contact" class="btn btn-outline btn-sm">Escolher</a>
-          </div>
-
-          <div class="monthly-card reveal" data-delay="80">
-            <div class="monthly-tier">Básico</div>
-            <div class="monthly-limit">até <strong>50</strong> alunos</div>
-            <div class="monthly-price">
-              <span class="m-price-value">25</span>
-              <span class="m-price-unit">€/mês</span>
-            </div>
-            <a href="#contact" class="btn btn-outline btn-sm">Escolher</a>
-          </div>
-
-          <div class="monthly-card reveal" data-delay="160">
-            <div class="monthly-tier">Standard</div>
-            <div class="monthly-limit">até <strong>70</strong> alunos</div>
-            <div class="monthly-price">
-              <span class="m-price-value">30</span>
-              <span class="m-price-unit">€/mês</span>
-            </div>
-            <a href="#contact" class="btn btn-outline btn-sm">Escolher</a>
-          </div>
-
-          <div class="monthly-card popular reveal" data-delay="240">
-            <div class="popular-label">⭐ Popular</div>
-            <div class="monthly-tier">Plus</div>
-            <div class="monthly-limit">até <strong>100</strong> alunos</div>
-            <div class="monthly-price">
-              <span class="m-price-value">35</span>
-              <span class="m-price-unit">€/mês</span>
-            </div>
-            <a href="#contact" class="btn btn-primary btn-sm">Escolher</a>
-          </div>
-
-          <div class="monthly-card reveal" data-delay="320">
-            <div class="monthly-tier">Pro</div>
-            <div class="monthly-limit">até <strong>150</strong> alunos</div>
-            <div class="monthly-price">
-              <span class="m-price-value">45</span>
-              <span class="m-price-unit">€/mês</span>
-            </div>
-            <a href="#contact" class="btn btn-outline btn-sm">Escolher</a>
-          </div>
-
-          <div class="monthly-card reveal" data-delay="400">
-            <div class="monthly-tier">Advanced</div>
-            <div class="monthly-limit">até <strong>200</strong> alunos</div>
-            <div class="monthly-price">
-              <span class="m-price-value">55</span>
-              <span class="m-price-unit">€/mês</span>
-            </div>
-            <a href="#contact" class="btn btn-outline btn-sm">Escolher</a>
-          </div>
-
-          <div class="monthly-card reveal" data-delay="480">
-            <div class="monthly-tier">Elite</div>
-            <div class="monthly-limit">até <strong>300</strong> alunos</div>
-            <div class="monthly-price">
-              <span class="m-price-value">80</span>
-              <span class="m-price-unit">€/mês</span>
-            </div>
-            <a href="#contact" class="btn btn-outline btn-sm">Escolher</a>
-          </div>
-
-        </div>
-        <p class="pricing-note">* Todos os planos incluem manutenção e suporte técnico. Preços sem IVA.</p>
-      </div>
+      <p class="pricing-note" style="margin-top: 40px; text-align: center;">* Todos os planos incluem manutenção e suporte técnico. Preços sem IVA.</p>
     </div>
   </section>
 
@@ -402,18 +380,6 @@
           </div>
         </div>
 
-        <div class="faq-item reveal" data-delay="120">
-          <button class="faq-question" aria-expanded="false">
-            <span>O check-in NFC funciona em todos os dispositivos?</span>
-            <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-          </button>
-          <div class="faq-answer">
-            <div class="faq-answer-inner">
-              O check-in via NFC é compatível com a maioria dos smartphones Android com NFC ativado. Em dispositivos sem NFC, está disponível a opção de check-in manual, igualmente rápida e segura.
-            </div>
-          </div>
-        </div>
-
         <div class="faq-item reveal" data-delay="180">
           <button class="faq-question" aria-expanded="false">
             <span>Os dados da minha academia são seguros?</span>
@@ -428,12 +394,12 @@
 
         <div class="faq-item reveal" data-delay="240">
           <button class="faq-question" aria-expanded="false">
-            <span>O que é a "App Personalizada"?</span>
+            <span>O que é o "Plano Plus"?</span>
             <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
           </button>
           <div class="faq-answer">
             <div class="faq-answer-inner">
-              A opção App Personalizada (200€ one-time) inclui a personalização da identidade visual da tua academia: logotipo, nome da app, cores e branding exclusivos. A tua academia tem uma aplicação com a sua própria identidade.
+              O Plano Plus (200€ custo inicial) inclui a personalização total da identidade visual da tua academia: logotipo, nome da app, cores e branding exclusivos. Além disso, permite a gestão de várias escolas e alunos ilimitados na mesma base de dados.
             </div>
           </div>
         </div>
@@ -469,7 +435,7 @@
           </button>
           <div class="faq-answer">
             <div class="faq-answer-inner">
-              O suporte está incluído em todos os planos. Podes contactar-nos por email em <a href="mailto:info@tatamecontrol.pt" style="color:var(--red)">info@tatamecontrol.pt</a> e respondemos o mais brevemente possível.
+              O suporte está incluído em todos os planos. Podes contactar-nos por email em <a href="tatamecontrol@gmail.com" style="color:var(--red)">info@tatamecontrol.pt</a> e respondemos o mais brevemente possível.
             </div>
           </div>
         </div>
@@ -486,7 +452,24 @@
         <span class="section-tag">Começar</span>
         <h2 class="cta-title">Pronto para elevar a tua academia?</h2>
         <p class="cta-desc">Entra em contacto e começa a gerir a tua academia de Jiu-Jitsu com o Tatame Control.</p>
-        <a href="mailto:info@tatamecontrol.pt" class="btn btn-primary btn-lg">Entrar em Contacto</a>
+        
+        <div class="contact-links">
+          <a href="tatamecontrol@gmail.com" class="btn btn-primary btn-lg">Email</a>
+          
+          <a href="tel:+351915232949" class="contact-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.27-2.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            Ligar
+          </a>
+          
+          <a href="https://wa.me/351915232949" target="_blank" class="contact-btn whatsapp">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            </svg>
+            WhatsApp
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -513,13 +496,25 @@
         </div>
         <div class="footer-links">
           <h5>Contacto</h5>
-          <ul>
-            <li><a href="mailto:info@tatamecontrol.pt">info@tatamecontrol.pt</a></li>
-          </ul>
+          <div class="footer-contact-links">
+            <a href="mailto:info@tatamecontrol.pt" class="footer-contact-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              info@tatamecontrol.pt
+            </a>
+            <a href="tel:+351915232949" class="footer-contact-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.27-2.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              +351 912 345 678
+            </a>
+            <a href="https://wa.me/351915232949" target="_blank" class="footer-contact-item wa-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+              WhatsApp
+            </a>
+          </div>
         </div>
       </div>
       <div class="footer-bottom">
         <p>© 2025 Tatame Control. Todos os direitos reservados.</p>
+        <p>Desenvolvido por Monteirismo.</p>
         <p class="footer-sem-iva">Preços apresentados sem IVA</p>
       </div>
     </div>

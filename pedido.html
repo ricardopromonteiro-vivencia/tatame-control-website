@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Finalizar Pedido — Tatame Control</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .order-page {
+      padding: 120px 24px 80px;
+      min-height: 100vh;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .order-container {
+      max-width: 600px;
+      width: 100%;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+    }
+    .order-header {
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    .order-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2rem;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .order-subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .selected-plan-box {
+      background: rgba(230,57,70,0.1);
+      border: 1px solid var(--border-red);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .selected-plan-info h4 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 4px;
+    }
+    .selected-plan-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .form-group label {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    .form-control {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      transition: all var(--transition);
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--red);
+      background: rgba(230,57,70,0.05);
+      box-shadow: 0 0 0 4px var(--red-glow);
+    }
+    .form-control::placeholder {
+      color: var(--text-dim);
+    }
+    .btn-submit {
+      width: 100%;
+      justify-content: center;
+      margin-top: 12px;
+      background: #25D366;
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+      border: none;
+    }
+    .btn-submit:hover {
+      background: #128C7E;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+    }
+    .back-link {
+      margin-top: 24px;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: color var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .back-link:hover {
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="https://xohxgafjrafssdogkrpu.supabase.co/storage/v1/object/public/imagens/TatameControl_logo.png" alt="Tatame Control Logo" style="height: 48px; border-radius: 50%;" />
+        <span class="logo-text">TATAME <span class="logo-accent">CONTROL</span></span>
+      </a>
+    </div>
+  </nav>
+
+  <main class="order-page">
+    <div class="order-container">
+      <div class="order-header">
+        <h1 class="order-title">Finalizar Pedido</h1>
+        <p class="order-subtitle">Preenche os dados abaixo para darmos início à ativação da tua conta.</p>
+      </div>
+
+      <div class="selected-plan-box">
+        <div class="selected-plan-info">
+          <h4>Plano Selecionado</h4>
+          <div class="selected-plan-name" id="displayPlan">A carregar...</div>
+        </div>
+        <div class="selected-plan-price" id="displayPrice" style="font-family:'Oswald'; font-size: 1.5rem; font-weight: 700;">--€</div>
+      </div>
+
+      <form id="orderForm" class="form-grid">
+        <div class="form-group">
+          <label for="escola">Nome da Escola ou Equipa *</label>
+          <input type="text" id="escola" name="escola" class="form-control" placeholder="Ex: Gracie Barra Matosinhos" required>
+        </div>
+
+        <div class="form-group">
+          <label for="responsavel">Nome Completo do Responsável *</label>
+          <input type="text" id="responsavel" name="responsavel" class="form-control" placeholder="O teu nome completo" required>
+        </div>
+
+        <div class="form-group">
+          <label for="morada">Morada da Escola *</label>
+          <input type="text" id="morada" name="morada" class="form-control" placeholder="Rua, Número, Localidade, Código Postal" required>
+        </div>
+
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label for="telefone">Telefone *</label>
+            <input type="tel" id="telefone" name="telefone" class="form-control" placeholder="9xxxxxxxx" required>
+          </div>
+          <div class="form-group">
+            <label for="nif">NIF (Escola ou Responsável) *</label>
+            <input type="text" id="nif" name="nif" class="form-control" placeholder="Nº de contribuinte" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">E-mail *</label>
+          <input type="email" id="email" name="email" class="form-control" placeholder="teu@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="obs">Observações (Opcional)</label>
+          <textarea id="obs" name="obs" class="form-control" rows="3" placeholder="Alguma dúvida ou detalhe adicional?"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-submit">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="margin-right:8px;"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.025 3.207L6.233 18.29l3.203-1.041c.905.51 1.745.88 2.618.88 3.185 0 5.765-2.58 5.766-5.768a5.772 5.772 0 00-5.789-6.189zm3.504 8.092c-.147.414-.727.761-1.002.808-.255.044-.577.075-.92-.038-.216-.07-.461-.17-.79-.304-1.393-.574-2.288-1.996-2.358-2.089-.07-.094-.57-.756-.57-1.442s.356-1.023.483-1.166c.127-.142.276-.178.368-.178.093 0 .186.001.267.006.084.004.195-.032.305.234.113.27.387.943.421 1.012.033.069.055.15.011.238-.046.09-.071.144-.141.226-.068.082-.143.183-.205.247-.07.07-.143.146-.061.287.082.141.363.6.781.972.538.48 1.002.627 1.142.697.141.071.223.059.306-.036.084-.093.355-.414.45-.556.093-.141.186-.118.314-.071.127.047.805.38 1.024.49.22.112.366.166.421.258.051.092.051.533-.096.947zM12 1a11 11 0 1011 11A11.013 11.013 0 0012 1zm0 20a9 9 0 119-9 9.01 9.01 0 01-9 9z"/></svg>
+          Finalizar via WhatsApp
+        </button>
+      </form>
+
+      <a href="index.html#pricing" class="back-link">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        Voltar aos planos
+      </a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>© 2025 Tatame Control. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Configurações dos Planos
+    const plansInfo = {
+      'simples-35': { name: 'Plano Simples - Até 35 Alunos', price: '20€/mês' },
+      'simples-50': { name: 'Plano Simples - Até 50 Alunos', price: '25€/mês' },
+      'simples-70': { name: 'Plano Simples - Até 70 Alunos', price: '30€/mês' },
+      'plus-100':   { name: 'Plano Plus - Até 100 Alunos', price: '55€/mês' },
+      'plus-150':   { name: 'Plano Plus - Até 150 Alunos', price: '70€/mês' },
+      'plus-200':   { name: 'Plano Plus - Até 200 Alunos', price: '80€/mês' }
+    };
+
+    // Obter parâmetro da URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const planId = urlParams.get('plano');
+    const selectedPlan = plansInfo[planId] || { name: 'Plano não selecionado', price: '--€' };
+
+    document.getElementById('displayPlan').textContent = selectedPlan.name;
+    document.getElementById('displayPrice').textContent = selectedPlan.price;
+
+    // Lógica do Formulário
+    document.getElementById('orderForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const escola = document.getElementById('escola').value;
+      const responsavel = document.getElementById('responsavel').value;
+      const morada = document.getElementById('morada').value;
+      const telefone = document.getElementById('telefone').value;
+      const email = document.getElementById('email').value;
+      const nif = document.getElementById('nif').value;
+      const obs = document.getElementById('obs').value;
+
+      const message = `*Novo Pedido de Adesão - Tatame Control*%0A%0A` +
+                      `*Plano:* ${selectedPlan.name}%0A` +
+                      `*Preço:* ${selectedPlan.price}%0A%0A` +
+                      `*Escola:* ${escola}%0A` +
+                      `*Responsável:* ${responsavel}%0A` +
+                      `*Morada:* ${morada}%0A` +
+                      `*Telefone:* ${telefone}%0A` +
+                      `*E-mail:* ${email}%0A` +
+                      `*NIF:* ${nif}%0A%0A` +
+                      `*Observações:* ${obs || 'Nenhuma'}`;
+
+      // Enviar para o WhatsApp (usando o número placeholder que pode ser alterado)
+      const whatsappNumber = "351915232949"; 
+      window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+    });
+  </script>
+
+</body>
+</html>

@@ -385,6 +385,33 @@ ul { list-style: none; }
   margin: 0 20px;
 }
 
+/* Device icons in stats */
+.stat-devices {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  height: 38px; /* Match stat-number height approximately */
+  margin-bottom: 4px;
+}
+
+.device-icon {
+  color: var(--text);
+  transition: all var(--transition);
+  opacity: 0.85;
+}
+
+.device-icon:hover {
+  color: var(--red);
+  transform: translateY(-2px);
+  opacity: 1;
+  filter: drop-shadow(0 0 8px var(--red-glow));
+}
+
+.device-icon:nth-child(1) { width: 14px; height: 14px; margin-bottom: 2px; } /* Smartphone */
+.stat-devices svg:nth-child(1) { width: 16px; height: 16px; }
+.stat-devices svg:nth-child(2) { width: 22px; height: 22px; } /* Tablet */
+.stat-devices svg:nth-child(3) { width: 30px; height: 30px; } /* Monitor */
+
 .hero-scroll {
   position: absolute;
   bottom: 32px;
@@ -731,18 +758,157 @@ ul { list-style: none; }
   background: linear-gradient(90deg, transparent, var(--border-red), transparent);
 }
 
-.pricing-group-title {
-  font-family: 'Oswald', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  margin-bottom: 24px;
+.pricing-comparison {
   display: flex;
-  align-items: center;
+  gap: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  max-width: 1000px;
+  margin: 0 auto;
+  backdrop-filter: blur(16px);
+}
+
+.pricing-col {
+  flex: 1;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+}
+
+.pricing-col.featured {
+  background: linear-gradient(180deg, rgba(230,57,70,0.08) 0%, transparent 100%);
+  position: relative;
+}
+
+.pricing-col-divider {
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--border), var(--border), transparent);
+}
+
+.p-col-header {
+  margin-bottom: 40px;
+}
+
+.p-col-name {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+.p-col-price {
+  font-family: 'Oswald', sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+}
+
+.p-col-price span {
+  font-size: 1.5rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+.p-col-features {
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
   gap: 14px;
 }
+
+.p-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.p-feature svg {
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.monthly-tiers-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.monthly-tiers {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tier-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: all var(--transition);
+}
+
+.tier-item:hover {
+  border-color: var(--border-red);
+  transform: translateX(4px);
+  background: rgba(230,57,70,0.05);
+}
+
+.tier-label {
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.tier-label strong { font-weight: 600; }
+
+.tier-price {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.tier-price span {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.tier-plus-note {
+  margin-top: 16px;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  background: rgba(240,180,41,0.08);
+  border: 1px dashed rgba(240,180,41,0.3);
+  color: var(--gold);
+  font-size: 0.82rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+@media (max-width: 992px) {
+  .pricing-comparison { flex-direction: column; max-width: 500px; }
+  .pricing-col-divider { height: 1px; width: 100%; }
+}
+
+/* Old styles to remove or override */
+.pricing-setup, .pricing-monthly { display: none; }
 
 .badge-new, .badge-monthly {
   display: inline-block;
@@ -871,7 +1037,9 @@ ul { list-style: none; }
 }
 
 /* Monthly Cards */
-.pricing-monthly { }
+.pricing-monthly {
+  margin-top: 40px;
+}
 
 .monthly-grid {
   display: grid;
@@ -1128,9 +1296,80 @@ ul { list-style: none; }
   line-height: 1.7;
 }
 
-/* ================================================
-   FOOTER
-   ================================================ */
+/* Contact Links in CTA and Footer */
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all var(--transition);
+  text-decoration: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.contact-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  border-color: var(--red);
+}
+
+.contact-btn.whatsapp:hover {
+  border-color: #25D366;
+  color: #25D366;
+  box-shadow: 0 10px 30px rgba(37, 211, 102, 0.2);
+}
+
+.contact-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Footer specific contact links */
+.footer-contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.footer-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  transition: color var(--transition);
+}
+
+.footer-contact-item:hover {
+  color: var(--text);
+}
+
+.footer-contact-item svg {
+  width: 16px;
+  height: 16px;
+  color: var(--red);
+}
+
+.footer-contact-item.wa-item:hover svg {
+  color: #25D366;
+}
 .footer {
   background: var(--bg-2);
   border-top: 1px solid var(--border);
