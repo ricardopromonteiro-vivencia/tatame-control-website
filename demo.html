@@ -9,31 +9,32 @@
     /* ===== RESET & VARS ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --primary: #2563eb;
-      --primary-dark: #1d4ed8;
-      --primary-glow: rgba(37, 99, 235, 0.2);
-      --bg-dark: #0a0a0c;
-      --bg-card: #111116;
-      --bg-hover: rgba(255,255,255,0.04);
-      --text-main: #f2f2f5;
-      --text-muted: #8a8a9a;
-      --danger: #ef4444;
-      --warning: #f0b429;
-      --blue: #3b82f6;
-      --purple: #8b5cf6;
-      --border: rgba(255,255,255,0.08);
-      --radius: 12px;
-      --sidebar-w: 240px;
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --primary-glow: rgba(59, 130, 246, 0.1);
+      --bg-dark: #1f2633;
+      --bg-card: #2e384d;
+      --sidebar-bg: #181f2c;
+      --bg-hover: rgba(255,255,255,0.03);
+      --text-main: #ffffff;
+      --text-muted: #94a3b8;
+      --danger: #f87171;
+      --warning: #f59e0b;
+      --success: #10b981;
+      --purple: #a855f7;
+      --border: rgba(255,255,255,0.05);
+      --radius: 16px;
+      --sidebar-w: 280px;
     }
-    html, body { height: 100%; overflow: hidden; font-family: 'Inter', system-ui, sans-serif; font-size: 14px; background: var(--bg-dark); color: var(--text-main); }
+    html, body { height: 100%; overflow: hidden; font-family: 'Inter', system-ui, sans-serif; font-size: 15px; background: var(--bg-dark); color: var(--text-main); -webkit-font-smoothing: antialiased; }
 
     /* ===== LAYOUT ===== */
-    .app { display: flex; height: 100%; overflow: hidden; }
+    .app { display: flex; flex: 1; min-height: 0; overflow: hidden; }
 
     /* ===== SIDEBAR ===== */
     .sidebar {
       width: var(--sidebar-w);
-      background: var(--bg-card);
+      background: var(--sidebar-bg);
       border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
@@ -41,35 +42,27 @@
       overflow: hidden;
     }
     .sidebar-header {
-      padding: 1.25rem 1rem;
-      border-bottom: 1px solid var(--border);
+      padding: 3rem 1rem 2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.6rem;
+      gap: 1.25rem;
     }
     .sidebar-logo-wrap {
-      width: 64px; height: 64px;
+      width: 90px; height: 90px;
       border-radius: 50%;
-      border: 2px solid var(--primary);
       background: white;
       display: flex; align-items: center; justify-content: center;
       overflow: hidden;
-      padding: 3px;
-    }
-    .sidebar-logo-wrap span {
-      font-size: 1.8rem;
+      padding: 0;
     }
     .role-badge {
-      background: rgba(16,185,129,0.12);
-      color: var(--primary);
-      border: 1px solid rgba(16,185,129,0.3);
-      padding: 2px 10px;
-      border-radius: 999px;
-      font-size: 0.7rem;
-      font-weight: 700;
+      color: #3b82f6;
+      font-size: 0.65rem;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
+      opacity: 0.9;
     }
     .sidebar-nav {
       flex: 1;
@@ -79,18 +72,19 @@
     .nav-item {
       display: flex;
       align-items: center;
-      gap: 0.65rem;
-      padding: 0.65rem 1.25rem;
-      color: var(--text-muted);
+      gap: 0.85rem;
+      padding: 0.85rem 1.5rem;
+      color: #94a3b8;
       cursor: pointer;
-      transition: all 0.18s;
-      font-size: 0.85rem;
+      transition: all 0.2s;
+      font-size: 0.92rem;
       font-weight: 500;
-      border-right: 3px solid transparent;
+      border-left: 3px solid transparent;
       user-select: none;
+      opacity: 0.8;
     }
-    .nav-item:hover { background: rgba(255,255,255,0.04); color: var(--text-main); }
-    .nav-item.active { background: rgba(16,185,129,0.08); color: var(--primary); border-right-color: var(--primary); }
+    .nav-item:hover { background: rgba(255,255,255,0.02); color: var(--text-main); opacity: 1; }
+    .nav-item.active { background: rgba(59, 130, 246, 0.08); color: #3b82f6; border-left-color: #3b82f6; opacity: 1; }
     .nav-item svg { flex-shrink: 0; opacity: 0.8; }
     .nav-item.active svg { opacity: 1; }
     .sidebar-footer {
@@ -124,7 +118,9 @@
     /* ===== MAIN ===== */
     .main-content {
       flex: 1;
+      min-width: 0;
       overflow-y: auto;
+      overflow-x: hidden;
       padding: 1.75rem;
       background: var(--bg-dark);
     }
@@ -150,25 +146,30 @@
     .pill-gray  { background: rgba(255,255,255,0.07); color: var(--text-muted); border:1px solid var(--border); }
 
     /* ===== DASHBOARD ===== */
-    .stat-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-bottom: 1.5rem; }
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-bottom: 2rem; }
     .stat-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.1rem 1.25rem;
-      display: flex; align-items: center; gap: 1rem;
-      transition: transform 0.2s, box-shadow 0.2s;
+      border-radius: 16px;
+      padding: 1.75rem;
+      display: flex; align-items: center; gap: 1.5rem;
+      transition: all 0.2s;
     }
-    .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
-    .stat-card.green { border-left: 4px solid var(--primary); }
-    .stat-card.blue  { border-left: 4px solid #3b82f6; }
-    .stat-card.orange{ border-left: 4px solid #f59e0b; }
-    .stat-card.purple{ border-left: 4px solid #8b5cf6; }
-    .stat-icon { font-size: 1.6rem; flex-shrink: 0; }
-    .stat-label { font-size: 0.73rem; color: var(--text-muted); font-weight: 500; }
-    .stat-value { font-size: 1.75rem; font-weight: 700; line-height: 1; }
+    .stat-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+    .stat-card.blue   { border-left: 4px solid #3b82f6; box-shadow: -4px 0 16px rgba(59, 130, 246, 0.1); }
+    .stat-card.blue-2 { border-left: 4px solid #3b82f6; box-shadow: -4px 0 16px rgba(59, 130, 246, 0.1); }
+    .stat-card.orange { border-left: 4px solid #f59e0b; box-shadow: -4px 0 16px rgba(245, 158, 11, 0.1); }
+    .stat-card.purple { border-left: 4px solid #a855f7; box-shadow: -4px 0 16px rgba(168, 85, 247, 0.1); }
+    .stat-icon-box {
+      width: 52px; height: 52px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.03);
+      font-size: 1.6rem;
+    }
+    .stat-label { font-size: 0.82rem; color: var(--text-muted); font-weight: 500; margin-bottom: 0.1rem; }
+    .stat-value { font-size: 2.2rem; font-weight: 800; line-height: 1; }
 
-    .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem; }
     .chart-bar-row { display:flex; align-items:center; gap:0.6rem; margin-bottom:0.55rem; }
     .chart-day { width:2.6rem; text-align:right; font-size:0.72rem; color:var(--text-muted); text-transform:capitalize; flex-shrink:0; }
     .chart-track { flex:1; background:rgba(255,255,255,0.06); border-radius:999px; height:10px; overflow:hidden; }
@@ -199,7 +200,8 @@
       transition:border-color 0.2s;
     }
     .search-input:focus { border-color:var(--primary); }
-    .athlete-table { width:100%; border-collapse:collapse; }
+    .athlete-table-wrapper { overflow-x: auto; width: 100%; }
+    .athlete-table { width:100%; border-collapse:collapse; white-space:nowrap; }
     .athlete-table thead th {
       text-align:left; font-size:0.72rem; font-weight:600;
       color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em;
@@ -229,7 +231,7 @@
     /* ===== CHECK-IN ===== */
     .checkin-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem; }
     .checkin-class-select {
-      display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:1.25rem;
+      display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:0.75rem; margin-bottom:1.25rem;
     }
     .checkin-class-card {
       background:var(--bg-card); border:1px solid var(--border);
@@ -257,7 +259,7 @@
     .checkin-btn.done { background:rgba(37,99,235,0.08); color:#60a5fa; border:1px solid rgba(37,99,235,0.2); cursor:default; }
 
     /* ===== AULAS ===== */
-    .classes-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; }
+    .classes-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem; }
     .class-card {
       background:var(--bg-card); border:1px solid var(--border);
       border-radius:var(--radius); padding:1.1rem;
@@ -296,8 +298,7 @@
     .demo-dot { width:7px; height:7px; border-radius:50%; background:var(--primary); animation:pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
     .app-wrapper { position:relative; height:100%; display:flex; flex-direction:column; }
-    .app-inner { flex:1; overflow:hidden; display:flex; flex-direction:column; }
-    .app-with-banner { padding-top:28px; }
+    .app-inner { flex:1; min-height:0; overflow:hidden; display:flex; flex-direction:column; }
 
     /* scrollbar */
     ::-webkit-scrollbar { width:4px; }
@@ -313,37 +314,65 @@
     <div class="demo-dot"></div>
   </div>
 
-  <div class="app-inner app-with-banner">
+  <div class="app-inner">
     <div class="app">
 
       <!-- SIDEBAR -->
       <nav class="sidebar">
         <div class="sidebar-header">
-          <div class="sidebar-logo-wrap" style="padding: 0; border: none; background: transparent;">
-            <img src="https://xohxgafjrafssdogkrpu.supabase.co/storage/v1/object/public/imagens/TatameControl_logo.png" alt="Logo" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary);" />
+          <div class="sidebar-logo-wrap">
+            <img src="https://xohxgafjrafssdogkrpu.supabase.co/storage/v1/object/public/imagens/TatameControl_logo.png" alt="Logo" style="width: 100%; height: 100%; object-fit: cover;" />
           </div>
-          <span class="role-badge">Admin</span>
+          <span class="role-badge">Professor Responsável</span>
         </div>
         <div class="sidebar-nav">
           <div class="nav-item active" onclick="showPage('dashboard',this)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
             Dashboard
           </div>
+          <div class="nav-item" onclick="showPage('escola',this)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+            Gestão da Escola
+          </div>
           <div class="nav-item" onclick="showPage('aulas',this)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
             Gestão de Aulas
           </div>
+          <div class="nav-item" onclick="showPage('avisos',this)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a3 3 0 0 0-3-3H5a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3V8z"/><path d="M10 12h.01"/><path d="M14 12h.01"/><path d="M6 12h.01"/></svg>
+            Avisos
+          </div>
           <div class="nav-item" onclick="showPage('atletas',this)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             Atletas
           </div>
           <div class="nav-item" onclick="showPage('pagamentos',this)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
             Pagamentos
           </div>
           <div class="nav-item" onclick="showPage('checkin',this)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
             Check-in
+          </div>
+          <div class="nav-item" onclick="showPage('validacoes',this)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Validações
+          </div>
+          <div class="nav-item" onclick="showPage('definicoes',this)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            Definições
+          </div>
+          <div class="nav-item" onclick="showPage('termos',this)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Termos e Condições
+          </div>
+          <div class="nav-item" onclick="showPage('ajuda',this)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Ajuda & Suporte
+          </div>
+          <div class="nav-item" style="margin-top: auto; color: #3b82f6;" onclick="showPage('instalar',this)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Instalar App
           </div>
         </div>
         <div class="sidebar-footer">
@@ -366,75 +395,68 @@
 
         <!-- ===== DASHBOARD ===== -->
         <div class="page active" id="page-dashboard">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2.5rem;">
             <div>
-              <div class="page-title">Boa tarde, Admin Carlos! 👋</div>
-              <div class="page-subtitle">Aqui está o resumo de hoje no tatame.</div>
+              <div class="page-title" style="font-size: 2.2rem; margin-bottom: 0.5rem;">Bom dia, Professor Mestre! 👋</div>
+              <div class="page-subtitle" style="font-size: 1.05rem;">Aqui está o resumo de hoje no tatame.</div>
             </div>
-            <span class="pill pill-green" style="font-size:0.78rem;padding:4px 12px;">Academia Cobra Kai</span>
+            <span style="background: rgba(13, 148, 136, 0.1); border: 1px solid rgba(13, 148, 136, 0.2); color: #2dd4bf; font-weight: 700; font-size: 0.8rem; padding: 6px 14px; border-radius: 999px;">TatameControl</span>
           </div>
 
           <div class="stat-grid">
-            <div class="stat-card green">
-              <div class="stat-icon">🏅</div>
-              <div><div class="stat-label">Atletas</div><div class="stat-value">47</div></div>
-            </div>
             <div class="stat-card blue">
-              <div class="stat-icon">📅</div>
-              <div><div class="stat-label">Aulas Hoje</div><div class="stat-value">3</div></div>
+              <div class="stat-icon-box">🏅</div>
+              <div><div class="stat-label">Atletas</div><div class="stat-value">0</div></div>
+            </div>
+            <div class="stat-card blue-2">
+              <div class="stat-icon-box">📅</div>
+              <div><div class="stat-label">Aulas Hoje</div><div class="stat-value">0</div></div>
             </div>
             <div class="stat-card orange">
-              <div class="stat-icon">✅</div>
-              <div><div class="stat-label">Presenças Hoje</div><div class="stat-value">18</div></div>
+              <div class="stat-icon-box">✅</div>
+              <div><div class="stat-label">Presenças Hoje</div><div class="stat-value">0</div></div>
             </div>
             <div class="stat-card purple">
-              <div class="stat-icon">📊</div>
-              <div><div class="stat-label">Presenças (7d)</div><div class="stat-value">94</div></div>
+              <div class="stat-icon-box">📊</div>
+              <div><div class="stat-label">Presenças (7d)</div><div class="stat-value">0</div></div>
             </div>
           </div>
 
           <div class="dash-grid">
             <!-- Gráfico -->
             <div class="card">
-              <div class="card-title">📈 Afluência — Últimos 7 dias</div>
-              <div id="chart"></div>
+              <div class="card-title" style="display: flex; align-items: center; gap: 8px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                Afluência (Últimos 7 dias)
+              </div>
+              <div id="chart" style="margin-top: 1.25rem;"></div>
             </div>
 
             <!-- Aulas de Hoje -->
             <div class="card">
-              <div class="card-title">🥋 Aulas de Hoje</div>
-              <div class="class-row">
-                <div><div class="class-row-title">BJJ Fundamentos</div><div class="class-row-time">⏱ 09:00 – 10:00</div></div>
-                <span class="pill pill-green">8 inscritos</span>
+              <div class="card-title" style="display: flex; align-items: center; gap: 8px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Aulas de Hoje
               </div>
-              <div class="class-row">
-                <div><div class="class-row-title">Treino Geral</div><div class="class-row-time">⏱ 12:00 – 13:00</div></div>
-                <span class="pill pill-green">6 inscritos</span>
+              <div style="padding: 2rem 0; color: var(--text-muted); font-size: 0.92rem;">
+                <p>Nenhuma aula hoje.</p>
+                <button onclick="showPage('checkin', document.querySelectorAll('.nav-item')[6])" style="display:inline-block;margin-top:1.25rem;color:#3b82f6;font-weight:600;text-decoration:none;background:none;border:none;cursor:pointer;font-size:inherit;padding:0;">→ Ir para Painel de Check-in</button>
               </div>
-              <div class="class-row">
-                <div><div class="class-row-title">Competição Avançado</div><div class="class-row-time">⏱ 19:00 – 20:30</div></div>
-                <span class="pill pill-green">4 inscritos</span>
-              </div>
-              <a href="#" style="display:block;margin-top:0.75rem;font-size:0.78rem;color:var(--primary);font-weight:600;" onclick="showPage('checkin',document.querySelector('.nav-item:nth-child(5)'));return false;">→ Ir para Check-in</a>
             </div>
 
             <!-- Retenção -->
             <div class="card" style="grid-column:1/-1;">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-                <div class="card-title" style="margin:0;">⚠️ Retenção — Inativos há mais de 30 dias</div>
-                <span class="pill pill-yellow">3 atletas</span>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+                <div class="card-title" style="margin:0;display: flex; align-items: center; gap: 10px;">
+                  <span style="color: #fbbf24; font-size: 1.1rem;">⚠️</span> Retenção (Inativos)
+                </div>
+                <select style="background: #111622; border: 1px solid var(--border); color: var(--text-main); padding: 5px 12px; border-radius: 8px; font-size: 0.82rem; outline: none; cursor: pointer;">
+                  <option>&gt; 1 Mês</option>
+                  <option>&gt; 3 Meses</option>
+                </select>
               </div>
-              <div class="class-row">
-                <div><div class="class-row-title">Pedro Alves</div><div class="class-row-time" style="display:flex;align-items:center;gap:5px;"><span class="belt-dot" style="background:#2563eb;"></span>Faixa Azul</div></div>
-                <span class="pill pill-red">38 dias</span>
-              </div>
-              <div class="class-row">
-                <div><div class="class-row-title">Marta Santos</div><div class="class-row-time" style="display:flex;align-items:center;gap:5px;"><span class="belt-dot" style="background:#fff;border:1px solid #555;"></span>Faixa Branca</div></div>
-                <span class="pill pill-red">45 dias</span>
-              </div>
-              <div class="class-row">
-                <div><div class="class-row-title">João Nunes</div><div class="class-row-time" style="display:flex;align-items:center;gap:5px;"><span class="belt-dot" style="background:#9333ea;"></span>Faixa Roxa</div></div>
-                <span class="pill pill-red">31 dias</span>
+              <div style="padding: 1rem 0; color: #94a3b8; font-size: 0.92rem;">
+                Todos os atletas treinaram recentemente. Excelente!
               </div>
             </div>
           </div>
@@ -565,18 +587,20 @@
             <span class="pill pill-green" style="flex-shrink:0;">47 atletas</span>
           </div>
           <div class="card" style="padding:0;overflow:hidden;">
-            <table class="athlete-table" id="athlete-table">
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>Faixa</th>
-                  <th>Presenças</th>
-                  <th>Estado</th>
-                  <th>Escola</th>
-                </tr>
-              </thead>
-              <tbody id="athlete-tbody"></tbody>
-            </table>
+            <div class="athlete-table-wrapper">
+              <table class="athlete-table" id="athlete-table">
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Faixa</th>
+                    <th>Presenças</th>
+                    <th>Estado</th>
+                    <th>Escola</th>
+                  </tr>
+                </thead>
+                <tbody id="athlete-tbody"></tbody>
+              </table>
+            </div>
           </div>
         </div>
 
@@ -585,7 +609,7 @@
           <div class="page-title">Pagamentos</div>
           <div class="page-subtitle">Controlo de mensalidades e estado financeiro.</div>
 
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem;">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));gap:1rem;margin-bottom:1.5rem;">
             <div class="card" style="text-align:center;">
               <div style="font-size:1.6rem;font-weight:700;color:var(--primary);">39</div>
               <div style="font-size:0.72rem;color:var(--text-muted);margin-top:2px;">Pagamentos em Dia</div>
@@ -634,6 +658,14 @@
           <div class="checkin-list" id="checkin-list"></div>
         </div>
 
+        <!-- Placeholder Page -->
+        <div class="page" id="page-escola"> <div class="page-title">Gestão da Escola</div> <p class="page-subtitle">Em desenvolvimento...</p> </div>
+        <div class="page" id="page-avisos"> <div class="page-title">Avisos</div> <p class="page-subtitle">Em desenvolvimento...</p> </div>
+        <div class="page" id="page-validacoes"> <div class="page-title">Validações</div> <p class="page-subtitle">Em desenvolvimento...</p> </div>
+        <div class="page" id="page-definicoes"> <div class="page-title">Definições</div> <p class="page-subtitle">Em desenvolvimento...</p> </div>
+        <div class="page" id="page-termos"> <div class="page-title">Termos e Condições</div> <p class="page-subtitle">Em desenvolvimento...</p> </div>
+        <div class="page" id="page-ajuda"> <div class="page-title">Ajuda & Suporte</div> <p class="page-subtitle">Em desenvolvimento...</p> </div>
+        <div class="page" id="page-instalar"> <div class="page-title">Instalar App</div> <p class="page-subtitle">Descarrega a aplicação para o teu dispositivo.</p> </div>
       </main>
     </div>
   </div>
@@ -707,19 +739,16 @@ function showPage(id, el) {
 
 // ===== CHART =====
 const chartData = [
-  {day:'seg', count:14}, {day:'ter', count:9}, {day:'qua', count:18},
-  {day:'qui', count:11}, {day:'sex', count:16}, {day:'sáb', count:22}, {day:'dom', count:4}
+  {day:'Sábado', count:0}, {day:'Domingo', count:0}, {day:'Segunda', count:0},
+  {day:'Terça', count:0}, {day:'Quarta', count:0}, {day:'Quinta', count:0}, {day:'Sexta', count:0}
 ];
-const maxC = Math.max(...chartData.map(d=>d.count));
 const chartEl = document.getElementById('chart');
 chartData.forEach(d => {
-  const pct = Math.max(4, Math.round((d.count/maxC)*100));
-  const highlighted = d.count === maxC;
   chartEl.innerHTML += `
     <div class="chart-bar-row">
-      <span class="chart-day">${d.day}</span>
-      <div class="chart-track"><div class="chart-fill" style="width:${pct}%;${highlighted?'':'background:rgba(16,185,129,0.5);'}"></div></div>
-      <span class="chart-count" style="color:${d.count===0?'var(--text-muted)':'white'}">${d.count}</span>
+      <span class="chart-day" style="width: 4rem;">${d.day}</span>
+      <div class="chart-track" style="background: rgba(255,255,255,0.04); height: 8px; border-radius: 4px;"><div class="chart-fill" style="width:0%; background: #3b82f6;"></div></div>
+      <span class="chart-count" style="color:var(--text-muted); font-weight: 500;">0</span>
     </div>`;
 });
 
@@ -814,17 +843,26 @@ function updateCounter() {
 renderCheckin();
 
 // ===== LISTEN FOR EXTERNAL TAB NAVIGATION =====
+// Mapa: page id -> índice real na sidebar
+const navIndexMap = {
+  'dashboard':  0,
+  'escola':     1,
+  'aulas':      2,
+  'avisos':     3,
+  'atletas':    4,
+  'pagamentos': 5,
+  'checkin':    6,
+  'validacoes': 7,
+  'definicoes': 8,
+  'termos':     9,
+  'ajuda':      10,
+  'instalar':   11
+};
+
 window.addEventListener('message', (event) => {
   if (event.data && event.data.action === 'navigate') {
     const page = event.data.page;
-    const navMap = {
-      'dashboard': 0,
-      'aulas': 1,
-      'atletas': 2,
-      'pagamentos': 3,
-      'checkin': 4
-    };
-    const idx = navMap[page];
+    const idx = navIndexMap[page];
     if (idx !== undefined) {
       const navItems = document.querySelectorAll('.nav-item');
       if (navItems[idx]) {
