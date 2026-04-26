@@ -153,7 +153,7 @@
       <form id="orderForm" class="form-grid">
         <div class="form-group">
           <label for="escola">Nome da Escola ou Equipa *</label>
-          <input type="text" id="escola" name="escola" class="form-control" placeholder="Ex: Gracie Barra Matosinhos" required>
+          <input type="text" id="escola" name="escola" class="form-control" placeholder="Ex: Escola Jiu-Jitsu Porto" required>
         </div>
 
         <div class="form-group">
@@ -169,7 +169,7 @@
         <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
           <div class="form-group">
             <label for="telefone">Telefone *</label>
-            <input type="tel" id="telefone" name="telefone" class="form-control" placeholder="9xxxxxxxx" required>
+            <input type="tel" id="telefone" name="telefone" class="form-control" placeholder="912345678" required>
           </div>
           <div class="form-group">
             <label for="nif">NIF (Escola ou Responsável) *</label>
@@ -211,12 +211,12 @@
   <script>
     // Configurações dos Planos
     const plansInfo = {
-      'simples-35': { name: 'Plano Simples - Até 35 Alunos', price: '20€/mês' },
-      'simples-50': { name: 'Plano Simples - Até 50 Alunos', price: '25€/mês' },
-      'simples-70': { name: 'Plano Simples - Até 70 Alunos', price: '30€/mês' },
-      'plus-100':   { name: 'Plano Plus - Até 100 Alunos', price: '55€/mês' },
-      'plus-150':   { name: 'Plano Plus - Até 150 Alunos', price: '70€/mês' },
-      'plus-200':   { name: 'Plano Plus - Até 200 Alunos', price: '80€/mês' }
+      'simples-35': { name: 'Plano Base - Até 35 Alunos', price: '19.99€/mês' },
+      'simples-50': { name: 'Plano Base - Até 50 Alunos', price: '24.99€/mês' },
+      'simples-70': { name: 'Plano Base - Até 70 Alunos', price: '29.99€/mês' },
+      'plus-100':   { name: 'Plano Plus - Até 100 Alunos', price: '64.99€/mês' },
+      'plus-150':   { name: 'Plano Plus - Até 150 Alunos', price: '79.99€/mês' },
+      'plus-200':   { name: 'Plano Plus - Até 200 Alunos', price: '89.99€/mês' }
     };
 
     // Obter parâmetro da URL
@@ -239,20 +239,22 @@
       const nif = document.getElementById('nif').value;
       const obs = document.getElementById('obs').value;
 
-      const message = `*Novo Pedido de Adesão - Tatame Control*%0A%0A` +
-                      `*Plano:* ${selectedPlan.name}%0A` +
-                      `*Preço:* ${selectedPlan.price}%0A%0A` +
-                      `*Escola:* ${escola}%0A` +
-                      `*Responsável:* ${responsavel}%0A` +
-                      `*Morada:* ${morada}%0A` +
-                      `*Telefone:* ${telefone}%0A` +
-                      `*E-mail:* ${email}%0A` +
-                      `*NIF:* ${nif}%0A%0A` +
+      const message = `*Novo Pedido de Adesão - Tatame Control*\n\n` +
+                      `*Plano:* ${selectedPlan.name}\n` +
+                      `*Preço:* ${selectedPlan.price}\n\n` +
+                      `*Escola:* ${escola}\n` +
+                      `*Responsável:* ${responsavel}\n` +
+                      `*Morada:* ${morada}\n` +
+                      `*Telefone:* ${telefone}\n` +
+                      `*E-mail:* ${email}\n` +
+                      `*NIF:* ${nif}\n\n` +
                       `*Observações:* ${obs || 'Nenhuma'}`;
+
+      const encodedMessage = encodeURIComponent(message);
 
       // Enviar para o WhatsApp (usando o número placeholder que pode ser alterado)
       const whatsappNumber = "351915232949"; 
-      window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+      window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
     });
   </script>
 
